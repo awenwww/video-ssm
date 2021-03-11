@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace  命名空间   必须是唯一的-->
+<mapper namespace="com.qf.dao.UserDao">
+
+    <select id="findByEmailAndPass" resultType="com.qf.pojo.User" parameterType="com.qf.pojo.User">
+        select * from user where email=#{email} and password=#{password}
+    </select>
+    <insert id="insertUser" parameterType="com.qf.pojo.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null"> id,</if>
+             <if test="email!=null">email,</if>
+             <if test="phoneNum!=null">phoneNum,</if>
+             <if test="password!=null">password,</if>
+             <if test="code!=null">code,</if>
+             <if test="nickName!=null">nickName,</if>
+             <if test="sex!=null">sex,</if>
+             <if test="birthday!=null">birthday,</if>
+             <if test="address!=null">address,</if>
+             <if test="imgUrl!=null">imgUrl,</if>
+             <if test="createTime!=null">createTime,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id!=null"> #{id},</if>
+            <if test="email!=null">#{email},</if>
+            <if test="phoneNum!=null">#{phoneNum},</if>
+            <if test="password!=null">#{password},</if>
+            <if test="code!=null">#{code},</if>
+            <if test="nickName!=null">#{nickName},</if>
+            <if test="sex!=null">#{sex},</if>
+            <if test="birthday!=null">#{birthday},</if>
+            <if test="address!=null">#{address},</if>
+            <if test="imgUrl!=null">#{imgUrl},</if>
+            <if test="createTime!=null">#{createTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <select id="validateEmail" parameterType="com.qf.pojo.User" resultType="com.qf.pojo.User">
+        select * from user where email=#{email}
+    </select>
+    <update id="update" parameterType="com.qf.pojo.User">
+        update user
+        <set>
+            <if test="email!=null">email=#{email},</if>
+            <if test="phoneNum!=null">phoneNum=#{phoneNum},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="code!=null">code=#{code},</if>
+            <if test="nickName!=null">nickName=#{nickName},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="birthday!=null">birthday=#{birthday},</if>
+            <if test="address!=null">address=#{address},</if>
+            <if test="imgUrl!=null">imgUrl=#{imgUrl},</if>
+            <if test="createTime!=null">createTime=#{createTime,jdbcType=TIMESTAMP},</if>
+        </set>
+        where id=#{id}
+    </update>
+    <update id="updateByEmail" parameterType="com.qf.pojo.User">
+        update user set code=#{code} where email=#{email}
+    </update>
+    <update id="repassByEmail" parameterType="com.qf.pojo.User">
+        update user set password=#{password} where email=#{email}
+    </update>
+
+
+</mapper>
